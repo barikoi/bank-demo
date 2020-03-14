@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+    <script src="./plugins/toster/toastr.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous">
+    </script>
+    <script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+        crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barikoi/barikoi-js/dist/barikoi.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+    <title>Barikoi-Contact person verification</title>
+    <style>
+        .row{
+            padding: 5px;
+        
+        }
+        .headline{
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .notification-container{
+            position: absolute;
+            top: 20 0px;
+            left: 0;
+            min-height: 600px;
+            border-right: 1px solid #e6dfdf;
+            padding: 0;
+            z-index: 1;
+        }
+        .notification{
+            /* width: 100%;
+            height: 50px; */
+            padding: 20px;
+            text-align: center;
+            border:1px solid gray;
+            margin: 5px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        .notification a{
+            text-decoration: none;
+        }
+        .notification a:hover{
+            color: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <nav class="navbar navbar-expand-md border">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#"><img src="http://i.imgur.com/yMVpGJK.png" alt="yMVpGJK.png" style="width:30%;height: 30%;"></a>
+          
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse d-flex flex-row-reverse" id="collapsibleNavbar">
+              <ul class="navbar-nav" style="margin-right: 30px;">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Bank Name</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </section>
+
+    <section> <!--Notification Module-->
+        <div class="col-md-3 notification-container align-content-start" id="notification-container">
+            <center style="padding: 5px;">Task List</center><hr>
+        </div>       
+    </section>
+
+    <div class="container-fluid">
+        <div class="row" style="margin-left: 30px;">
+            <div class="col-md-3"> <!-- Side Nav-->
+            </div> <!-- Side Nav End -->
+            <div class="col-md-8">
+                <!-- <center><img src="http://i.imgur.com/yMVpGJK.png" alt="yMVpGJK.png" style="width:30%;height: 30%;"></center> -->
+                <center><h1 class="headline">Contact Person Verification</h1></center>
+                <!-- <form  style="width: 100%;"> -->
+                   <div class="row">
+                        <!-- Map Part Start -->
+                        <div class="col-md-6 border">
+                            <div class="row"> <!--Input For Address -->
+                                <input type="text" id="address" class="bksearch form-control">
+                                <div class="bklist"></div>
+                                <!-- <input type="text" class="form-control" placeholder="Search Address"> -->
+                            </div>
+                            <div id="map" style="min-height: 300px;"></div>
+                        </div>
+                        <!-- Map Part End -->
+                        <!-- Other Input Start -->
+                        <div class="col-md-6 border">
+                            <div class="row">
+                                <input class="col-md-12 form-control" id="name" type="text" placeholder="Enter Task Name">
+                            </div>
+                            <div class="row">
+                                <textarea class="form-control" rows="7" id="description" placeholder="Enter Task Description"></textarea>
+                            </div>
+                            <div class="row">
+                                <input type="text" id="email" class="col-md-12 form-control" placeholder="Enter Email">
+                                <!-- <input type="file" class="form-control-file border"> -->
+                            </div>
+                            <div class="row">
+                                <button class="btn" id="requestAction" style="background-color: #FFFF00;width: 100%;font-weight: bold;padding: 15px;;">Assign Task</button>
+                            </div>
+                        </div>
+                        <!-- Other Input Part End -->
+                   </div>
+                <!-- </form> -->
+
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+
+
+
+    <!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <table class="table table-bordered">
+                <tr>
+                    <td>Address</td>
+                    <td id="modal-address"></td>
+                </tr>
+                <tr>
+                    <td>Area</td>
+                    <td id="modal-area"></td>
+                </tr>
+                <tr>
+                    <td>Start Time</td>
+                    <td id="modal-startTime"></td>
+                </tr>
+                <tr>
+                    <td>End Time</td>
+                    <td id="modal-endTime"></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td id="modal-description"></td>
+                </tr>
+            </table>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+<script src="./barikoi.js?key:MTYyNjpUVVMzSUk2NEI0"></script>  
+<script src="./main.js"></script>
+<script>
+    let selectedPlace = null;
+    var response = null;
+    
+    $( document ).ready(function() {
+   
+        ajax_first(urlList('get_all_by_bank'),'GET',{'assigned_by'  : '57fbf6ca-868e-414a-8947-b069e3fc7dc9'});
+   
+
+   
+    
+   
+
+    // Barikoi AutoComplete UI
+    const defaultMarker = [23.834010701627, 90.367334864249] //Barikoi HQ 
+    let map = L.map('map')
+    map.setView(defaultMarker, 13)
+    // Set up the OSM layer
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18
+    }).addTo(map)
+    // Add marker to the map
+    L.marker(defaultMarker).addTo(map)
+    Bkoi.onSelect(function () {
+        // get selected data from dropdown list
+        selectedPlace = Bkoi.getSelectedData()            
+        let place = [selectedPlace.latitude, selectedPlace.longitude]
+        // Update Map center
+        map.setView(place, 19)
+        // Add marker to the map & bind popup
+        L.marker(place).addTo(map).bindPopup(selectedPlace.Address)
+
+    })  
+    // Barikoi AutoComplete UI End 
+
+
+    $('#requestAction').click(function(){
+    
+        if(requiredFieldVerification()){
+            makeToast('error','All the fields are required!');
+        }else{
+            let url = urlList('start_task');
+            let data = getData();
+            var request = $.ajax({
+                        url: url,
+                        method: "POST",
+                        data: data,
+                        success:function(msg,textStatus, xhr){
+                            console.log(msg);
+                            
+                            response = msg;
+                            if(response.status == 200){
+                                let templete = setTampleteForNotificationContainer(response.task);
+                                $('#notification-container').append(templete);
+                                makeToast('success','Task created successfully!');
+                            }  
+                        }
+                        });
+                        
+                        request.fail(function( jqXHR, textStatus ) {
+                            alert( "Request failed: " + textStatus );
+                    });
+            
+        }
+       
+    });
+
+
+    $(document).on("click", ".notification", function () {
+        var request = $.ajax({
+                        url: urlList('get_task_detail'),
+                        method: 'GET',
+                        data: {id : $(this).data('id')},
+                        success:function(msg){
+                            console.log(msg.task);
+                            $('.modal-title').html(msg.task.name);
+                            $('#modal-address').html(msg.task.address);
+                            $('#modal-area').html(msg.task.area);
+                            $('#modal-startTime').html(msg.task.start_time);
+                            $('#modal-endTime').html(msg.task.end_time);
+                            $('#modal-description').html(msg.task.description);
+                        }
+                        });
+                    
+                        request.fail(function( jqXHR, textStatus ) {
+                            alert( "Request failed: " + textStatus );
+                    });
+       
+    });
+
+
+});
+
+
+
+
+</script>  
+</body>
+</html>
