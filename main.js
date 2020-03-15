@@ -3,9 +3,20 @@ function getData()
     let name = $('#name').val();
     let description = $('#description').val();
     let email = $('#email').val();
+    let verify_person_name = $('#verify_person_name').val();
+    let verify_person_phone = $('#verify_person_mobile').val();
+    let final_description = `Person's name: ${verify_person_name} -
+                             Person's mobile: ${verify_person_phone} -
+                             Additional Information: ${description} -`;
+    if ($("#verify_physical").is(":checked")) final_description += 'You need to check the person\'s physical apearence -';
+    if ($("#verify_phone").is(":checked")) final_description += 'You need to check the person\'s phone number -';
+    if ($("#verify_address").is(":checked")) final_description += 'You need to check the person\'s address -';
+    if ($("#verify_nid").is(":checked")) final_description += 'You need to check the person\'s national ID -';
+        
+    
     return {
         'name' : name,
-        'description' : description,
+        'description' : final_description,
         'address' : selectedPlace.address,
         'area' : selectedPlace.area,
         'city' : selectedPlace.city,
@@ -23,11 +34,12 @@ function getData()
 function requiredFieldVerification()
 {
     let name = $('#name').val();
-    let description = $('#description').val();
     let address = $('#address').val();
     let email = $('#email').val();
+    let verify_person_name = $('#verify_person_name').val();
+    let verify_person_phone = $('#verify_person_mobile').val();
 
-    if(email.length <= 0 || name.length <= 0 || description.length <= 0 || address.length <= 0) return true;
+    if(verify_person_name.length <= 0 ||verify_person_phone.length <= 0 ||email.length <= 0 || name.length <= 0 || address.length <= 0) return true;
     else return false;
     
 }

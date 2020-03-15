@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barikoi/barikoi-js/dist/barikoi.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="">
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
-    <title>Barikoi-Contact person verification</title>
+    <title>Barikoi-Verify</title>
     <style>
         
         .row{
@@ -134,7 +134,11 @@
                         </tr>
                         <tr>
                             <td>Task Description:</td>
-                            <td id="task-description"></td>
+                            <td>
+                                <ol id="modal-description">
+        
+                                </ol>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -218,7 +222,13 @@
                             $('#task-address').html(msg.task.address);
                             $('#task-area').html(msg.task.area);
                             $('#task-created-at').html(msg.task.created_at);
-                            $('#task-description').html(msg.task.description);
+                            let description =  msg.task.description;
+                            description = description.split("-");
+                            $('#modal-description').html('');
+                            for (let index = 0; index < description.length - 1; index++) {
+                                $('#modal-description').append(`<li>${description[index].trim()}</li>`);
+                               
+                            }
                             showProperties();
                             loadMap(msg.task.longitude,msg.task.latitude);
                         }

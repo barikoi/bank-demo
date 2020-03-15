@@ -22,7 +22,7 @@
         integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous">
     </script>
-   
+   <script src="./config.js"></script>
    <!-- Script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barikoi/barikoi-js/dist/barikoi.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="">
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
-    <title>Barikoi-Contact person verification</title>
+    <title>Barikoi-Verify</title>
     <style>
         .row{
             padding: 5px;
@@ -119,6 +119,10 @@
             position: absolute;
             width: 1px;
             }
+            .checkbox{
+               
+            }
+            
     
     </style>
 </head>
@@ -159,18 +163,18 @@
             </div> <!-- Side Nav End -->
             <div class="col-md-8">
                 <!-- <center><img src="http://i.imgur.com/yMVpGJK.png" alt="yMVpGJK.png" style="width:30%;height: 30%;"></center> -->
-                <center><h1 class="headline">Contact Person Verification</h1></center>
+                <center><h1 class="headline">Contact Point Verification Dashboard <sup style="font-size: 25px;">(beta)</sup></h1></center>
                 <!-- <form  style="width: 100%;"> -->
                    <div class="row">
                         <!-- Map Part Start -->
                         <div class="col-md-6 border">
                             <div class="row"> <!--Input For Address -->
                                
-                                <input type='text' id='address' class="form-control" placeholder="Search Address">
+                                <input type='text' id='address' class="form-control" placeholder="Search Address"> 
                                 
                                 <!-- <input type="text" class="form-control" placeholder="Search Address"> -->
                             </div>
-                            <div id="map" style="min-height: 300px;"></div>
+                            <div id="map" style="min-height: 380px;"></div>
                         </div>
                         <!-- Map Part End -->
                         <!-- Other Input Start -->
@@ -179,10 +183,57 @@
                                 <input class="col-md-12 form-control" id="name" type="text" placeholder="Enter Task Name">
                             </div>
                             <div class="row">
-                                <textarea class="form-control" rows="7" id="description" placeholder="Enter Task Description"></textarea>
+                                <input class="col-md-12 form-control" id="verify_person_name" type="text" placeholder="Person To Verify">
                             </div>
                             <div class="row">
-                                <input type="text" id="email" class="col-md-12 form-control" placeholder="Enter Email">
+                                <input class="col-md-12 form-control" id="verify_person_mobile" type="text" placeholder="Contact Number To Verify">
+                            </div>
+                            <div class="row">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" id="verify_physical" class="form-check-input" value="">Verify Physical Apearance
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" id="verify_phone" class="form-check-input" value="">Verify Phone Number
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" id="verify_address" class="form-check-input" value="">Verify Address
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" id="verify_nid" class="form-check-input" value="">Verify NID
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                    
+                            </div>
+                            <div class="row">
+                                <textarea class="form-control" rows="3" id="description" placeholder="Additional Instruction"></textarea>
+                            </div>
+                            <div class="row">
+                                <input type="text" id="email" class="col-md-12 form-control" placeholder="Enter Bank Email">
                                 <!-- <input type="file" class="form-control-file border"> -->
                             </div>
                             <div class="row">
@@ -203,7 +254,7 @@
                         source: function( request, response ) {
                         // Fetch data
                         $.ajax({
-                            url: "https://barikoi.xyz/v1/api/search/autocomplete/MTYyNjpUVVMzSUk2NEI0/place",
+                            url: `https://barikoi.xyz/v1/api/search/autocomplete/${api_key}/place`,
                             type: 'GET',
                             dataType: "json",
                             data: {
@@ -293,7 +344,11 @@
                 </tr>
                 <tr>
                     <td>Description</td>
-                    <td id="modal-description"></td>
+                    <td>
+                        <ol id="modal-description">
+
+                        </ol>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -334,7 +389,7 @@
     $('#requestAction').click(function(){
     
         if(requiredFieldVerification()){
-            makeToast('error','All the fields are required!');
+            makeToast('error','Some fields are required!');
         }else{
            
             
@@ -345,7 +400,7 @@
                         method: "POST",
                         data: data,
                         success:function(msg,textStatus, xhr){
-                            console.log(msg);
+
                             
                             response = msg;
                             if(response.status == 200){
@@ -371,13 +426,19 @@
                         method: 'GET',
                         data: {id : $(this).data('id')},
                         success:function(msg){
-                            console.log(msg.task);
+                            let description =  msg.task.description;
+                            description = description.split("-");
                             $('.modal-title').html(msg.task.name);
                             $('#modal-address').html(msg.task.address);
                             $('#modal-area').html(msg.task.area);
                             $('#modal-startTime').html(msg.task.start_time);
                             $('#modal-endTime').html(msg.task.end_time);
-                            $('#modal-description').html(msg.task.description);
+                            $('#modal-description').html('');
+                            for (let index = 0; index < description.length - 1; index++) {
+                                $('#modal-description').append(`<li>${description[index].trim()}</li>`);
+                               
+                            }
+                            
                         }
                         });
                     
