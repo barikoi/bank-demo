@@ -232,9 +232,12 @@
 
     function loadMap(longitude,latitude)
    {
-      
-       
-    const defaultMarker = [latitude, longitude]
+    
+    var container = L.DomUtil.get('map');
+        if(container != null){
+        container._leaflet_id = null;
+    }
+    let defaultMarker = [latitude, longitude]
     let map = L.map('map')
 
     map.setView(defaultMarker, 50)

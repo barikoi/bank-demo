@@ -195,6 +195,9 @@
                 <!-- </form> -->
                 <script>
                       let selectedPlace = null;
+                      let defaultMarker = [23.834010701627, 90.367334864249];
+                      let map = L.map('map'); 
+                      setMapPointer();
                     $( function() {
                         $( "#address" ).autocomplete({
                         source: function( request, response ) {
@@ -227,11 +230,24 @@
                         },
                         select: function (event, ui) {
                             selectedPlace = ui.item;
-                            
+                            defaultMarker = [ui.item.latitude, ui.item.longitude];
+                            setMapPointer();
                             }
                         });
                     });
 
+                    function setMapPointer()
+                    {               
+                        map.setView(defaultMarker, 13);
+                        
+                        L.tileLayer(
+                            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 18
+                        }).addTo(map)
+                        
+                        L.marker(defaultMarker).addTo(map)
+                       
+                    }
                     
                     
                     </script>
@@ -302,17 +318,17 @@
         ajax_first(urlList('get_all_by_bank'),'GET',{'assigned_by'  : '57fbf6ca-868e-414a-8947-b069e3fc7dc9'});
 
     // Barikoi AutoComplete UI
-    const defaultMarker = [23.834010701627, 90.367334864249] //Barikoi HQ 
-    let map = L.map('map')
-    map.setView(defaultMarker, 13)
-    // Set up the OSM layer
-    L.tileLayer(
-        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18
-    }).addTo(map)
-    // Add marker to the map
-    L.marker(defaultMarker).addTo(map)
-    // Barikoi AutoComplete UI End 
+  
+    // let map = L.map('map')
+    // map.setView(defaultMarker, 13)
+    // // Set up the OSM layer
+    // L.tileLayer(
+    //     'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 18
+    // }).addTo(map)
+    // // Add marker to the map
+    // L.marker(defaultMarker).addTo(map)
+    // // Barikoi AutoComplete UI End 
 
 
     $('#requestAction').click(function(){
