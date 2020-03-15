@@ -22,6 +22,14 @@
         integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous">
     </script>
+   
+   <!-- Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/barikoi/barikoi-js/dist/barikoi.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="">
@@ -61,6 +69,57 @@
             color: blue;
             cursor: pointer;
         }
+        .ui-autocomplete {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            list-style: none;
+            font-size: 14px;
+            text-align: left;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 1px;
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            
+            }
+
+            .ui-autocomplete > li > div {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 1.42857143;
+            color: #333333;
+            white-space: nowrap;
+            }
+
+            .ui-state-hover,
+            .ui-state-active,
+            .ui-state-focus {
+            text-decoration: none;
+            color: #262626;
+            background-color: #f5f5f5;
+            cursor: pointer;
+            }
+
+            .ui-helper-hidden-accessible {
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+            }
+    
     </style>
 </head>
 <body>
@@ -106,8 +165,9 @@
                         <!-- Map Part Start -->
                         <div class="col-md-6 border">
                             <div class="row"> <!--Input For Address -->
-                                <input type="text" id="address" class="bksearch form-control">
-                                <div class="bklist"></div>
+                               
+                                <input type='text' id='address' class="form-control" placeholder="Search Address">
+                                
                                 <!-- <input type="text" class="form-control" placeholder="Search Address"> -->
                             </div>
                             <div id="map" style="min-height: 300px;"></div>
@@ -130,11 +190,56 @@
                             </div>
                         </div>
                         <!-- Other Input Part End -->
+                     
                    </div>
                 <!-- </form> -->
+                <script>
+                      let selectedPlace = null;
+                    $( function() {
+                        $( "#address" ).autocomplete({
+                        source: function( request, response ) {
+                        // Fetch data
+                        $.ajax({
+                            url: "https://barikoi.xyz/v1/api/search/autocomplete/MTYyNjpUVVMzSUk2NEI0/place",
+                            type: 'GET',
+                            dataType: "json",
+                            data: {
+                                q: request.term
+                            },
+                            success: function( data ) {
+                                let places = data.places;
 
+                                function prepareData(item) {
+                                    return {
+                                        'label' : item.address,
+                                        'id' : item.id,
+                                        'address' : item.address,
+                                        'area' : item.area,
+                                        'city' : item.city,
+                                        'latitude': item.latitude,
+                                        'longitude': item.longitude,
+                                    }
+                                }
+ 
+                                response(places.map(prepareData));
+                            }
+                        });
+                        },
+                        select: function (event, ui) {
+                            selectedPlace = ui.item;
+                            
+                            }
+                        });
+                    });
+
+                    
+                    
+                    </script>
+                    
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-1">
+            
+            </div>
         </div>
     </div>
 
@@ -186,20 +291,15 @@
     </div>
   </div>
   
-<script src="./barikoi.js?key:MTYyNjpUVVMzSUk2NEI0"></script>  
+
 <script src="./main.js"></script>
 <script>
-    let selectedPlace = null;
+  
     var response = null;
     
     $( document ).ready(function() {
    
         ajax_first(urlList('get_all_by_bank'),'GET',{'assigned_by'  : '57fbf6ca-868e-414a-8947-b069e3fc7dc9'});
-   
-
-   
-    
-   
 
     // Barikoi AutoComplete UI
     const defaultMarker = [23.834010701627, 90.367334864249] //Barikoi HQ 
@@ -212,16 +312,6 @@
     }).addTo(map)
     // Add marker to the map
     L.marker(defaultMarker).addTo(map)
-    Bkoi.onSelect(function () {
-        // get selected data from dropdown list
-        selectedPlace = Bkoi.getSelectedData()            
-        let place = [selectedPlace.latitude, selectedPlace.longitude]
-        // Update Map center
-        map.setView(place, 19)
-        // Add marker to the map & bind popup
-        L.marker(place).addTo(map).bindPopup(selectedPlace.Address)
-
-    })  
     // Barikoi AutoComplete UI End 
 
 
@@ -230,6 +320,8 @@
         if(requiredFieldVerification()){
             makeToast('error','All the fields are required!');
         }else{
+           
+            
             let url = urlList('start_task');
             let data = getData();
             var request = $.ajax({
