@@ -140,12 +140,12 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse d-flex flex-row-reverse" id="collapsibleNavbar">
               <ul class="navbar-nav" style="margin-right: 30px;">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="#">Bank Name</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Logout</a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </nav>
@@ -163,7 +163,7 @@
             </div> <!-- Side Nav End -->
             <div class="col-md-8">
                 <!-- <center><img src="http://i.imgur.com/yMVpGJK.png" alt="yMVpGJK.png" style="width:30%;height: 30%;"></center> -->
-                <center><h1 class="headline">Contact Point Verification Dashboard <sup style="font-size: 25px;">(beta)</sup></h1></center>
+                <center><h1 class="headline">Contact Point Verification Dashboard <sup style="font-size: 25px;">(demo)</sup></h1></center>
                 <!-- <form  style="width: 100%;"> -->
                    <div class="row">
                         <!-- Map Part Start -->
@@ -180,54 +180,98 @@
                         <!-- Other Input Start -->
                         <div class="col-md-6 border">
                             <div class="row">
-                                <input class="col-md-12 form-control" id="name" type="text" placeholder="Enter Task Name">
-                            </div>
-                            <div class="row">
                                 <input class="col-md-12 form-control" id="verify_person_name" type="text" placeholder="Person To Verify">
                             </div>
                             <div class="row">
                                 <input class="col-md-12 form-control" id="verify_person_mobile" type="text" placeholder="Contact Number To Verify">
                             </div>
                             <div class="row">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" id="verify_physical" class="form-check-input" value="">Verify Physical Apearance
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" id="verify_phone" class="form-check-input" value="">Verify Phone Number
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" id="verify_address" class="form-check-input" value="">Verify Address
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" id="verify_nid" class="form-check-input" value="">Verify NID
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                    
+                                <div class="col-md-12">
+                                    <table>
+                                        <!-- <tr>
+                                            <center>Residence</center>
+                                        </tr> -->
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_physical" class="form-check-input" value="">Verify Physical Apearance
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_phone" class="form-check-input" value="">Verify Phone Number
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_address" class="form-check-input" value="">Verify Address
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_nid" class="form-check-input" value="">Verify NID
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- <div class="col-md-6">
+                                    <table>
+                                        <tr>
+                                            <center>Office</center>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_physical" class="form-check-input" value="">Verify Physical Apearance
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_phone" class="form-check-input" value="">Verify Phone Number
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_address" class="form-check-input" value="">Verify Address
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" id="verify_nid" class="form-check-input" value="">Verify NID
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>                                     -->
                             </div>
                             <div class="row">
                                 <textarea class="form-control" rows="3" id="description" placeholder="Additional Instruction"></textarea>

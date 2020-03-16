@@ -1,10 +1,10 @@
 function getData()
 {
-    let name = $('#name').val();
     let description = $('#description').val();
     let email = $('#email').val();
     let verify_person_name = $('#verify_person_name').val();
     let verify_person_phone = $('#verify_person_mobile').val();
+    let name = 'Verify '+verify_person_name; 
     let final_description = `Person's name: ${verify_person_name} -
                              Person's mobile: ${verify_person_phone} -
                              Additional Information: ${description} -`;
@@ -33,13 +33,13 @@ function getData()
 
 function requiredFieldVerification()
 {
-    let name = $('#name').val();
+   
     let address = $('#address').val();
     let email = $('#email').val();
     let verify_person_name = $('#verify_person_name').val();
     let verify_person_phone = $('#verify_person_mobile').val();
 
-    if(verify_person_name.length <= 0 ||verify_person_phone.length <= 0 ||email.length <= 0 || name.length <= 0 || address.length <= 0) return true;
+    if(verify_person_name.length <= 0 ||verify_person_phone.length <= 0 ||email.length <= 0 || address.length <= 0) return true;
     else return false;
     
 }
