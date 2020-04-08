@@ -109,8 +109,8 @@ function ajax_first(url,method,data){
 
 function urlList(url_name)
 {
-    //let base_url = 'https://admin.barikoi.xyz:8090';
-	let base_url = 'http://admin.barikoi.test';
+    let base_url = 'https://admin.barikoi.xyz:8090';
+	//let base_url = 'http://admin.barikoi.test';
     let url = {
         'start_task' : base_url+'/bank/assign/task',
         'get_all' : base_url+'/bank/task/all',
