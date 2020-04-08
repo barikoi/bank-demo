@@ -23,7 +23,7 @@ function getData()
         'latitude': selectedPlace.latitude,
         'longitude': selectedPlace.longitude,
         'email' : email,
-        'assigned_by' : '57fbf6ca-868e-414a-8947-b069e3fc7dc9',
+        'assigned_by' : '1640',
         'status' : 1
     }   
     
@@ -109,7 +109,8 @@ function ajax_first(url,method,data){
 
 function urlList(url_name)
 {
-    let base_url = 'https://admin.barikoi.xyz:8090';
+    //let base_url = 'https://admin.barikoi.xyz:8090';
+	let base_url = 'http://admin.barikoi.test';
     let url = {
         'start_task' : base_url+'/bank/assign/task',
         'get_all' : base_url+'/bank/task/all',
