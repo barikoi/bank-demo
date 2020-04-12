@@ -139,8 +139,8 @@ function setTampleteForNotificationContainer(value)
                 `<div class="row" style="line-height: 5px;">`+
                     `<small>
                         Status: 
-                        <span style="color:${value.status == 0 ? 'red' : 'green'}">
-                             ${value.status == 0 ? 'Finished' : 'Active'}
+                        <span style="color:${value.status == 0 ? 'orange' : (value.status == 1 ? 'green' : 'red')}">
+                             ${value.status == 0 ? 'Pending' : (value.status == 1 ? 'Active' : 'Finished')}
                         </span>
                     </small>`+
                 `</div>`+
